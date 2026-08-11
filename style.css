@@ -1,0 +1,282 @@
+/* ===============================
+   Global Styles
+================================ */
+
+body {
+    background-color: #f5f7fb;
+    font-family: Arial, sans-serif;
+    color: #1f2937;
+}
+
+/* ===============================
+   Main Container
+================================ */
+
+.container {
+    max-width: 800px;
+    margin: 40px auto;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* ===============================
+   Main Heading
+================================ */
+
+h1 {
+    text-align: center;
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    color: #111827;
+}
+
+/* ===============================
+   Input Section
+================================ */
+
+.input-section {
+    display: flex;
+    gap: 10px;
+}
+
+/* Task Input */
+
+#taskInput {
+    flex: 1;
+    padding: 13px 15px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    font-size: 16px;
+    outline: none;
+}
+
+/* Input Focus */
+
+#taskInput:focus {
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
+}
+
+/* ===============================
+   Add Task Button
+================================ */
+
+#addBtn {
+    background-color: #4f46e5;
+    color: white;
+    padding: 13px 20px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+/* Add Button Hover */
+
+#addBtn:hover {
+    background-color: #4338ca;
+}
+
+/* ===============================
+   Task Counter
+================================ */
+
+h3 {
+    margin-top: 25px;
+    margin-bottom: 20px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #6b7280;
+}
+
+/* Task Count Number */
+
+#taskCount {
+    color: #4f46e5;
+    font-weight: 700;
+}
+
+/* ===============================
+   Section Headings
+================================ */
+
+h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #111827;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+/* ===============================
+   Task Card
+================================ */
+
+.task {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    background-color: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+}
+
+/* Task Checkbox */
+
+.task input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: #4f46e5;
+}
+
+/* Task Text */
+
+.task span {
+    flex: 1;
+    font-size: 16px;
+    color: #374151;
+}
+
+/* Completed Task */
+
+.task.completed span {
+    text-decoration: line-through;
+    color: #9ca3af;
+}
+
+/* ===============================
+   Delete Button
+================================ */
+
+.task > button:last-child {
+    background-color: #fee2e2;
+    color: #dc2626;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Delete Button Hover */
+
+.task > button:last-child:hover {
+    background-color: #fecaca;
+}
+
+/* ===============================
+   Important / Star Button
+================================ */
+
+.star-btn {
+    background: transparent;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 8px;
+}
+
+/* Star Button Hover */
+
+.star-btn:hover {
+    background-color: #fef3c7;
+}
+
+/* ===============================
+   Recycle Bin Task
+================================ */
+
+.recycle-task {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    background-color: #fff7ed;
+    border: 1px solid #fed7aa;
+    border-radius: 12px;
+}
+
+/* Recycle Bin Buttons Container */
+
+.recycle-task div {
+    display: flex;
+    gap: 8px;
+}
+
+/* ===============================
+   Restore Button
+================================ */
+
+.restore-btn {
+    background-color: #dcfce7;
+    color: #16a34a;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+/* Restore Button Hover */
+
+.restore-btn:hover {
+    background-color: #bbf7d0;
+}
+
+/* ===============================
+   Delete Forever Button
+================================ */
+
+.delete-forever-btn {
+    background-color: #fee2e2;
+    color: #dc2626;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+/* Delete Forever Hover */
+
+.delete-forever-btn:hover {
+    background-color: #fecaca;
+}
+
+/* ===============================
+   Clear All Button
+================================ */
+
+#clearBtn {
+    background-color: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+/* Clear All Hover */
+
+#clearBtn:hover {
+    background-color: #fee2e2;
+}

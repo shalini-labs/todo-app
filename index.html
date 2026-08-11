@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My To-Do App</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>📝 My To-Do App</h1>
+
+        <div class="input-section">
+
+            <input
+                type="text"
+                id="taskInput"
+                placeholder="Enter your task..."
+            >
+
+            <button id="addBtn">
+                Add Task
+            </button>
+
+        </div>
+
+        <h3>
+            Total Tasks:
+            <span id="taskCount">0</span>
+        </h3>
+
+        <h2>📋 My Tasks</h2>
+
+        <div id="taskList"></div>
+
+        <button id="clearBtn">
+            Clear All
+        </button>
+
+        <hr>
+
+        <h2>🗑 Recycle Bin</h2>
+
+        <div id="recycleBin"></div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

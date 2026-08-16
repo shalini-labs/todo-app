@@ -280,3 +280,7 @@ h2 {
 #clearBtn:hover {
     background-color: #fee2e2;
 }
+.task.important {
+    background-color: #fffbeb;
+    border: 1px solid #facc15;
+}

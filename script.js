@@ -92,6 +92,52 @@ addBtn.addEventListener("click", function () {
 
     deleteBtn.addEventListener("click", function () {
 
+        const recycleTask = document.createElement("div");
+
+        recycleTask.className = "recycle-task";
+
+        const recycleText = document.createElement("span");
+
+        recycleText.textContent = taskText;
+
+        recycleTask.appendChild(recycleText);
+
+const restoreBtn = document.createElement("button");
+
+restoreBtn.textContent = "Restore";
+
+restoreBtn.className = "restore-btn";
+
+const deleteForeverBtn = document.createElement("button");
+
+deleteForeverBtn.textContent = "Delete Forever";
+
+deleteForeverBtn.className = "delete-forever-btn";
+
+recycleTask.appendChild(restoreBtn);
+
+recycleTask.appendChild(deleteForeverBtn);
+
+restoreBtn.addEventListener("click", function () {
+
+    taskList.appendChild(task);
+
+    recycleTask.remove();
+
+    totalTasks++;
+
+    taskCount.textContent = totalTasks;
+
+});
+
+deleteForeverBtn.addEventListener("click", function () {
+
+    recycleTask.remove();
+
+});
+
+recycleBin.appendChild(recycleTask);
+
         task.remove();
 
         totalTasks--;
@@ -124,5 +170,28 @@ addBtn.addEventListener("click", function () {
 
     // Clear Input
     taskInput.value = "";
+
+});
+
+taskInput.addEventListener("keypress", function (event) {
+
+    if (event.key === "Enter") {
+
+        addBtn.click();
+
+    }
+
+});
+// =======================
+// Clear All Tasks
+// =======================
+
+clearBtn.addEventListener("click", function () {
+
+    taskList.innerHTML = "";
+
+    totalTasks = 0;
+
+    taskCount.textContent = totalTasks;
 
 });

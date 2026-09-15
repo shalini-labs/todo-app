@@ -7,6 +7,10 @@ console.log("JavaScript Connected Successfully!");
 const taskInput = document.getElementById("taskInput");
 const addBtn = document.getElementById("addBtn");
 const taskList = document.getElementById("taskList");
+const searchInput = document.getElementById("searchInput");
+const allBtn = document.getElementById("allBtn");
+const pendingBtn = document.getElementById("pendingBtn");
+const completedBtn = document.getElementById("completedBtn");
 const taskCount = document.getElementById("taskCount");
 const clearBtn = document.getElementById("clearBtn");
 const recycleBin = document.getElementById("recycleBin");
@@ -37,12 +41,15 @@ if (completed) {
     checkBox.checked = true;
     task.classList.add("completed");
 }
-
 checkBox.addEventListener("change", function () {
-    task.classList.toggle("completed");
-    saveTasks();
-});
 
+    task.classList.toggle("completed");
+
+    saveTasks();
+
+    filterTasks();
+
+});
 
     // =======================
     // Star Button
@@ -335,3 +342,85 @@ function loadTasks() {
 
 }
  loadTasks();
+
+// =======================
+// Search and Filter Tasks
+// =======================
+
+let currentFilter = "all";
+
+function filterTasks() {
+
+    const searchText = searchInput.value.toLowerCase();
+
+    const allTasks = document.querySelectorAll(".task");
+
+    allTasks.forEach(function (task) {
+
+        const taskText = task.querySelector("span").textContent.toLowerCase();
+
+        const isCompleted = task.classList.contains("completed");
+
+        const matchesSearch = taskText.includes(searchText);
+
+        let matchesFilter = true;
+
+        if (currentFilter === "pending") {
+            matchesFilter = !isCompleted;
+        }
+
+        if (currentFilter === "completed") {
+            matchesFilter = isCompleted;
+        }
+
+        if (matchesSearch && matchesFilter) {
+            task.style.display = "flex";
+        } else {
+            task.style.display = "none";
+        }
+
+    });
+
+}
+
+
+// Search
+
+searchInput.addEventListener("input", function () {
+
+    filterTasks();
+
+});
+
+
+// All Button
+
+allBtn.addEventListener("click", function () {
+
+    currentFilter = "all";
+
+    filterTasks();
+
+});
+
+
+// Pending Button
+
+pendingBtn.addEventListener("click", function () {
+
+    currentFilter = "pending";
+
+    filterTasks();
+
+});
+
+
+// Completed Button
+
+completedBtn.addEventListener("click", function () {
+
+    currentFilter = "completed";
+
+    filterTasks();
+
+});

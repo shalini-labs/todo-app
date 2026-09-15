@@ -284,3 +284,46 @@ h2 {
     background-color: #fffbeb;
     border: 1px solid #facc15;
 }
+
+/* =======================
+   Search Bar
+======================= */
+
+#searchInput {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 15px;
+    margin: 10px 0 20px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+}
+
+#searchInput:focus {
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+/* =======================
+   Filter Buttons
+======================= */
+
+.filter-section {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.filter-section button {
+    padding: 9px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    background: #e5e7eb;
+}
+
+.filter-section button:hover {
+    background: #d1d5db;
+}

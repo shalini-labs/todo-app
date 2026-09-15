@@ -327,3 +327,30 @@ h2 {
 .filter-section button:hover {
     background: #d1d5db;
 }
+
+/* =======================
+   Edit Button
+======================= */
+
+.task button:not(.star-btn):not(.delete-btn) {
+    padding: 7px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+/* =======================
+   Edit Button
+======================= */
+
+.edit-btn {
+    padding: 7px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.edit-btn:hover {
+    opacity: 0.85;
+}

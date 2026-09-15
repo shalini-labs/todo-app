@@ -93,6 +93,36 @@ if (important) {
     taskSpan.textContent = taskText;
 
     // =======================
+// Edit Button
+// =======================
+
+const editBtn = document.createElement("button");
+editBtn.textContent = "Edit";
+editBtn.classList.add("edit-btn");
+
+editBtn.addEventListener("click", function () {
+
+    const newTaskText = prompt("Edit your task:", taskSpan.textContent);
+
+    if (newTaskText === null) {
+        return;
+    }
+
+    const trimmedText = newTaskText.trim();
+
+    if (trimmedText === "") {
+        alert("Task cannot be empty!");
+        return;
+    }
+
+    taskSpan.textContent = trimmedText;
+
+    saveTasks();
+    filterTasks();
+
+});
+
+    // =======================
     // Delete Button
     // =======================
 
@@ -101,8 +131,8 @@ if (important) {
 
     deleteBtn.addEventListener("click", function () {
 
-        createRecycleTask(
-    taskText,
+       createRecycleTask(
+    taskSpan.textContent,
     task,
     task.classList.contains("completed"),
     task.classList.contains("important")
@@ -122,10 +152,11 @@ if (important) {
     // Add Elements to Task
     // =======================
 
-    task.appendChild(checkBox);
-    task.appendChild(starBtn);
-    task.appendChild(taskSpan);
-    task.appendChild(deleteBtn);
+task.appendChild(checkBox);
+task.appendChild(starBtn);
+task.appendChild(taskSpan);
+task.appendChild(editBtn);
+task.appendChild(deleteBtn);
 
     // =======================
     // Add Task to List

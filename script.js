@@ -128,6 +128,7 @@ editBtn.addEventListener("click", function () {
 
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "Delete";
+    deleteBtn.classList.add("delete-btn");
 
     deleteBtn.addEventListener("click", function () {
 
@@ -373,6 +374,7 @@ function loadTasks() {
 
 }
  loadTasks();
+ allBtn.classList.add("active");
 
 // =======================
 // Search and Filter Tasks
@@ -427,31 +429,37 @@ searchInput.addEventListener("input", function () {
 // All Button
 
 allBtn.addEventListener("click", function () {
-
     currentFilter = "all";
 
-    filterTasks();
+    allBtn.classList.add("active");
+    pendingBtn.classList.remove("active");
+    completedBtn.classList.remove("active");
 
+    filterTasks();
 });
 
 
 // Pending Button
 
 pendingBtn.addEventListener("click", function () {
-
     currentFilter = "pending";
 
-    filterTasks();
+    pendingBtn.classList.add("active");
+    allBtn.classList.remove("active");
+    completedBtn.classList.remove("active");
 
+    filterTasks();
 });
 
 
 // Completed Button
 
 completedBtn.addEventListener("click", function () {
-
     currentFilter = "completed";
 
-    filterTasks();
+    completedBtn.classList.add("active");
+    allBtn.classList.remove("active");
+    pendingBtn.classList.remove("active");
 
+    filterTasks();
 });

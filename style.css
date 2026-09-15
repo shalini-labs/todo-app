@@ -1,41 +1,54 @@
 /* ===============================
    Global Styles
-================================ */
+=============================== */
+
+* {
+    box-sizing: border-box;
+}
 
 body {
-    background-color: #f5f7fb;
+    margin: 0;
+    background: #f5f7fb;
     font-family: Arial, sans-serif;
     color: #1f2937;
+    min-height: 100vh;
 }
 
 /* ===============================
    Main Container
-================================ */
+=============================== */
 
 .container {
-    max-width: 800px;
-    margin: 40px auto;
-    background-color: #ffffff;
-    padding: 30px;
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    width: min(800px, 92%);
+    margin: 50px auto;
+    padding: 32px;
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 24px;
+    box-shadow:
+        0 20px 60px rgba(31, 41, 55, 0.12),
+        0 4px 20px rgba(31, 41, 55, 0.06);
 }
-
 /* ===============================
    Main Heading
-================================ */
+=============================== */
 
 h1 {
     text-align: center;
-    font-size: 32px;
-    font-weight: 700;
-    margin-bottom: 25px;
-    color: #111827;
+    margin-bottom: 28px;
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    background: linear-gradient(90deg, #4f46e5, #7c3aed);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 /* ===============================
    Input Section
-================================ */
+=============================== */
 
 .input-section {
     display: flex;
@@ -43,67 +56,54 @@ h1 {
     margin-bottom: 20px;
 }
 
-.input-section input {
-    flex: 1;
-}
-
-.input-section button {
-    min-width: 120px;
-}
-
-/* Task Input */
-
 #taskInput {
     flex: 1;
-    padding: 13px 15px;
-    border: 1px solid #d1d5db;
-    border-radius: 10px;
-    font-size: 16px;
+    padding: 14px 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    font-size: 1rem;
     outline: none;
+    background: rgba(255, 255, 255, 0.85);
+    transition: 0.25s ease;
 }
-
-/* Input Focus */
 
 #taskInput:focus {
-    border-color: #4f46e5;
-    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
+    border-color: #6366f1;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.12);
 }
-
-/* ===============================
-   Add Task Button
-================================ */
 
 #addBtn {
-    background-color: #4f46e5;
-    color: white;
-    padding: 13px 20px;
+    padding: 14px 22px;
     border: none;
-    border-radius: 10px;
-    font-size: 16px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    color: white;
+    font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: 0.2s ease;
+    transition: 0.25s ease;
+    box-shadow: 0 8px 20px rgba(79, 70, 229, 0.25);
 }
 
-/* Add Button Hover */
-
 #addBtn:hover {
-    background-color: #4338ca;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px rgba(79, 70, 229, 0.35);
+}
+
+#addBtn:active {
+    transform: translateY(0);
 }
 
 /* ===============================
    Task Counter
-================================ */
+=============================== */
 
 h3 {
-    margin-top: 25px;
-    margin-bottom: 20px;
+    margin: 25px 0 20px;
     font-size: 15px;
     font-weight: 500;
     color: #6b7280;
 }
-
-/* Task Count Number */
 
 #taskCount {
     color: #4f46e5;
@@ -112,55 +112,115 @@ h3 {
 
 /* ===============================
    Section Headings
-================================ */
+=============================== */
 
 h2 {
     font-size: 20px;
     font-weight: 700;
     color: #111827;
-    margin-top: 30px;
-    margin-bottom: 15px;
+    margin: 30px 0 15px;
+}
+
+/* ===============================
+   Search Bar
+=============================== */
+
+#searchInput {
+    width: 100%;
+    padding: 13px 16px;
+    margin: 18px 0;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    font-size: 1rem;
+    outline: none;
+    background: rgba(255, 255, 255, 0.85);
+    transition: 0.25s ease;
+}
+
+#searchInput:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.12);
+}
+
+/* ===============================
+   Filter Buttons
+=============================== */
+
+.filter-section {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.filter-section button {
+    background: #f1f5f9;
+    color: #374151;
+    border: 1px solid #e2e8f0;
+    padding: 9px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filter-section button:hover {
+    background: #e0e7ff;
+    color: #4f46e5;
+    transform: translateY(-1px);
+}
+
+.filter-section button.active,
+#allBtn.active,
+#pendingBtn.active,
+#completedBtn.active {
+    background: #4f46e5 !important;
+    color: white !important;
+    border-color: #4f46e5 !important;
 }
 
 /* ===============================
    Task Card
-================================ */
+=============================== */
 
 .task {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 14px 16px;
+    padding: 15px 16px;
     margin-bottom: 12px;
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
-    transition: all 0.2s ease;
+    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid rgba(229, 231, 235, 0.8);
+    border-radius: 16px;
+    box-shadow: 0 5px 18px rgba(31, 41, 55, 0.06);
+    transition: 0.25s ease;
 }
 
 .task:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 10px 28px rgba(31, 41, 55, 0.1);
 }
-/* Task Checkbox */
 
 .task input[type="checkbox"] {
     width: 18px;
     height: 18px;
+    flex-shrink: 0;
     cursor: pointer;
     accent-color: #4f46e5;
 }
 
-/* Task Text */
+/* ===============================
+   Task Text
+=============================== */
 
 .task span {
     flex: 1;
+    min-width: 0;
     font-size: 15px;
     color: #1f2937;
     word-break: break-word;
 }
-
-/* Completed Task */
 
 .task.completed span {
     text-decoration: line-through;
@@ -168,33 +228,8 @@ h2 {
 }
 
 /* ===============================
-   Delete Button
-================================ */
-
-.task > button:last-child {
-    background-color: #fee2e2;
-    color: #dc2626;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-}
-
-/* Delete Button Hover */
-
-.task > button:last-child:hover {
-    background-color: #fecaca;
-}
-
-/* ===============================
-   Important / Star Button
-================================ */
-
-/* =======================
    Professional Star Button
-======================= */
+=============================== */
 
 .star-btn {
     background: transparent;
@@ -204,11 +239,17 @@ h2 {
     padding: 6px 8px;
     border-radius: 8px;
     transition: all 0.2s ease;
+    flex-shrink: 0;
 }
 
 .star-btn:hover {
     background: #fef3c7;
     transform: scale(1.1);
+}
+
+.task.important {
+    border-color: rgba(245, 158, 11, 0.45);
+    box-shadow: 0 6px 22px rgba(245, 158, 11, 0.12);
 }
 
 .task.important .star-btn {
@@ -220,12 +261,52 @@ h2 {
 }
 
 /* ===============================
-   Recycle Bin Task
-================================ */
+   Edit Button
+=============================== */
 
-/* =======================
-   Professional Recycle Bin
-======================= */
+.edit-btn {
+    padding: 7px 12px;
+    border: 1px solid #c7d2fe;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    background: #eef2ff;
+    color: #4338ca;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.edit-btn:hover {
+    background: #e0e7ff;
+    transform: translateY(-1px);
+}
+
+/* ===============================
+   Delete Button
+=============================== */
+
+.delete-btn {
+    padding: 7px 12px;
+    border: 1px solid #fecaca;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    background: #fef2f2;
+    color: #dc2626;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.delete-btn:hover {
+    background: #fee2e2;
+    transform: translateY(-1px);
+}
+
+/* ===============================
+   Recycle Bin
+=============================== */
 
 .recycle-task {
     display: flex;
@@ -246,20 +327,15 @@ h2 {
 
 .recycle-task span {
     flex: 1;
+    min-width: 0;
     color: #6b7280;
     font-size: 15px;
-}
-
-/* Recycle Bin Buttons Container */
-
-.recycle-task div {
-    display: flex;
-    gap: 8px;
+    word-break: break-word;
 }
 
 /* ===============================
    Restore Button
-================================ */
+=============================== */
 
 .restore-btn {
     padding: 7px 12px;
@@ -271,6 +347,7 @@ h2 {
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
+    flex-shrink: 0;
 }
 
 .restore-btn:hover {
@@ -278,10 +355,9 @@ h2 {
     transform: translateY(-1px);
 }
 
-
 /* ===============================
-   Delete Forever Button
-================================ */
+   Delete Forever
+=============================== */
 
 .delete-forever-btn {
     padding: 7px 12px;
@@ -293,6 +369,7 @@ h2 {
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
+    flex-shrink: 0;
 }
 
 .delete-forever-btn:hover {
@@ -300,14 +377,9 @@ h2 {
     transform: translateY(-1px);
 }
 
-
 /* ===============================
-   Clear All Button
-================================ */
-
-/* =======================
-   Professional Clear All
-======================= */
+   Clear All
+=============================== */
 
 #clearBtn {
     display: block;
@@ -327,119 +399,200 @@ h2 {
     background: #fee2e2;
     transform: translateY(-1px);
 }
-.task.important {
-    background: #fffbeb;
-    border: 1px solid #facc15;
-    box-shadow: 0 3px 10px rgba(250, 204, 21, 0.12);
+
+/* ===============================
+   Mobile Responsive
+=============================== */
+
+@media (max-width: 600px) {
+
+    .container {
+        width: calc(100% - 20px);
+        margin: 15px auto;
+        padding: 20px 15px;
+        border-radius: 12px;
+    }
+
+    h1 {
+        font-size: 26px;
+        margin-bottom: 20px;
+    }
+
+    .input-section {
+        flex-direction: column;
+    }
+
+    #addBtn {
+        width: 100%;
+    }
+
+    h2 {
+        font-size: 18px;
+    }
+
+    .task {
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 12px;
+    }
+
+    .task span {
+        min-width: calc(100% - 90px);
+    }
+
+    .edit-btn,
+    .delete-btn {
+        padding: 7px 10px;
+    }
+
+    .recycle-task {
+        flex-wrap: wrap;
+        align-items: flex-start;
+    }
+
+    .recycle-task span {
+        width: 100%;
+        flex-basis: 100%;
+    }
+
+    .restore-btn,
+    .delete-forever-btn {
+        flex: 1;
+    }
+
+    .filter-section button {
+        flex: 1;
+        min-width: 90px;
+    }
+}
+/* Task animations */
+
+.task {
+    animation: taskAppear 0.35s ease-out;
 }
 
-/* =======================
-   Search Bar
-======================= */
+@keyframes taskAppear {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.98);
+    }
 
-#searchInput {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 12px 15px;
-    margin: 10px 0 20px;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    font-size: 16px;
-    outline: none;
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+.task.completed {
+    opacity: 0.65;
 }
 
-#searchInput:focus {
-    border-color: #4f46e5;
-    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+.task.completed span {
+    text-decoration: line-through;
 }
-
-/* =======================
-   Filter Buttons
-======================= */
-
-.filter-section {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-.filter-section button {
-    padding: 9px 16px;
-    border: none;
-    border-radius: 6px;
+.task input[type="checkbox"] {
+    width: 19px;
+    height: 19px;
     cursor: pointer;
-    font-size: 14px;
-    background: #e5e7eb;
+    accent-color: #6366f1;
+    transition: transform 0.2s ease;
 }
 
-.filter-section button:hover {
-    background: #d1d5db;
+.task input[type="checkbox"]:checked {
+    transform: scale(1.12);
+}
+.star-btn {
+    transition: transform 0.2s ease;
 }
 
+.star-btn:hover {
+    transform: scale(1.2) rotate(8deg);
+}
+/* ===============================
+   Dashboard Stats
+=============================== */
 
-.edit-btn {
-    padding: 7px 12px;
-    border: 1px solid #c7d2fe;
-    border-radius: 7px;
-    cursor: pointer;
+.stats-section {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 20px 0;
+}
+
+.stat-card {
+    padding: 18px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(31, 41, 55, 0.06);
+    transition: 0.25s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+}
+
+.stat-label {
+    display: block;
     font-size: 13px;
-    font-weight: 600;
-    background: #eef2ff;
-    color: #4338ca;
-    transition: all 0.2s ease;
+    color: #6b7280;
+    margin-bottom: 6px;
 }
 
-.edit-btn:hover {
-    background: #e0e7ff;
-    transform: translateY(-1px);
-}
-
-.delete-btn {
-    padding: 7px 12px;
-    border: 1px solid #fecaca;
-    border-radius: 7px;
-    cursor: pointer;
-    font-size: 13px;
-    font-weight: 600;
-    background: #fef2f2;
-    color: #dc2626;
-    transition: all 0.2s ease;
-}
-
-.delete-btn:hover {
-    background: #fee2e2;
-    transform: translateY(-1px);
-}
-/* =======================
-   Fast Day 2 - Filter UI
-======================= */
-
-.filter-section button {
-    background: #f1f5f9;
-    color: #374151;
-    border: 1px solid #e2e8f0;
-    padding: 9px 16px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.2s ease;
-}
-
-.filter-section button:hover {
-    background: #e0e7ff;
+.stat-card strong {
+    font-size: 25px;
     color: #4f46e5;
-    transform: translateY(-1px);
 }
-.filter-section button.active {
-    background: #4f46e5;
-    color: white;
-    border-color: #4f46e5;
+
+
+/* ===============================
+   Progress Bar
+=============================== */
+
+.progress-section {
+    margin: 20px 0 28px;
 }
-#allBtn.active,
-#pendingBtn.active,
-#completedBtn.active {
-    background-color: #4f46e5 !important;
-    color: white !important;
-    border: 1px solid #4f46e5 !important;
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #6b7280;
+}
+
+.progress-header strong {
+    color: #4f46e5;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 10px;
+    background: #e5e7eb;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+#progressFill {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #4f46e5, #7c3aed);
+    border-radius: 20px;
+    transition: width 0.4s ease;
+}
+
+
+/* Mobile */
+
+@media (max-width: 600px) {
+    .stats-section {
+        grid-template-columns: 1fr;
+    }
+}
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    background: #f4f6fb;
 }

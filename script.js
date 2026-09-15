@@ -7,237 +7,216 @@ console.log("JavaScript Connected Successfully!");
 const taskInput = document.getElementById("taskInput");
 const addBtn = document.getElementById("addBtn");
 const taskList = document.getElementById("taskList");
+
 const searchInput = document.getElementById("searchInput");
+
 const allBtn = document.getElementById("allBtn");
 const pendingBtn = document.getElementById("pendingBtn");
 const completedBtn = document.getElementById("completedBtn");
+
 const taskCount = document.getElementById("taskCount");
+const totalStat = document.getElementById("totalStat");
+const pendingStat = document.getElementById("pendingStat");
+const completedStat = document.getElementById("completedStat");
+const progressText = document.getElementById("progressText");
+const progressFill = document.getElementById("progressFill");
 const clearBtn = document.getElementById("clearBtn");
+
 const recycleBin = document.getElementById("recycleBin");
 
-// =======================
-// Variables
-// =======================
-
 let totalTasks = 0;
+let currentFilter = "all";
 
 // =======================
-// Create Task Function
+// Create Task
 // =======================
 
-function createTask(taskText, completed = false, important = false, shouldSave = true) {
-
+function createTask(
+    taskText,
+    completed = false,
+    important = false,
+    shouldSave = true
+) {
     const task = document.createElement("div");
     task.className = "task";
 
-    // =======================
-// Checkbox
-// =======================
+    // Checkbox
+    const checkBox = document.createElement("input");
+    checkBox.type = "checkbox";
+    checkBox.checked = completed;
 
-const checkBox = document.createElement("input");
-checkBox.type = "checkbox";
+    if (completed) {
+        task.classList.add("completed");
+    }
 
-if (completed) {
-    checkBox.checked = true;
-    task.classList.add("completed");
-}
-checkBox.addEventListener("change", function () {
-
+    checkBox.addEventListener("change", function () {
     task.classList.toggle("completed");
-
     saveTasks();
-
     filterTasks();
-
+    updateStats();
 });
-
-    // =======================
     // Star Button
-    // =======================
-const starBtn = document.createElement("button");
-starBtn.innerText = important ? "⭐" : "☆";
-starBtn.classList.add("star-btn");
+    const starBtn = document.createElement("button");
+    starBtn.innerText = important ? "⭐" : "☆";
+    starBtn.classList.add("star-btn");
 
-if (important) {
-    task.classList.add("important");
-}
+    if (important) {
+        task.classList.add("important");
+    }
+
     starBtn.addEventListener("click", function () {
+        const isImportant = task.classList.toggle("important");
 
-        if (starBtn.innerText === "☆") {
+        starBtn.innerText = isImportant ? "⭐" : "☆";
 
-            starBtn.innerText = "⭐";
-            task.classList.add("important");
-
-            // Move important task to top
-            taskList.prepend(task);
-
-        } else {
-
-            starBtn.innerText = "☆";
-            task.classList.remove("important");
-
-        }
         saveTasks();
-
     });
 
-
-
-
-
-    // =======================
     // Task Text
-    // =======================
-
     const taskSpan = document.createElement("span");
     taskSpan.textContent = taskText;
 
-    // =======================
-// Edit Button
-// =======================
+    // Edit Button
+    const editBtn = document.createElement("button");
+    editBtn.textContent = "Edit";
+    editBtn.classList.add("edit-btn");
 
-const editBtn = document.createElement("button");
-editBtn.textContent = "Edit";
-editBtn.classList.add("edit-btn");
+    editBtn.addEventListener("click", function () {
+        const newTaskText = prompt(
+            "Edit your task:",
+            taskSpan.textContent
+        );
 
-editBtn.addEventListener("click", function () {
+        if (newTaskText === null) {
+            return;
+        }
 
-    const newTaskText = prompt("Edit your task:", taskSpan.textContent);
+        const trimmedText = newTaskText.trim();
 
-    if (newTaskText === null) {
-        return;
-    }
+        if (trimmedText === "") {
+            alert("Task cannot be empty!");
+            return;
+        }
 
-    const trimmedText = newTaskText.trim();
+        taskSpan.textContent = trimmedText;
 
-    if (trimmedText === "") {
-        alert("Task cannot be empty!");
-        return;
-    }
+        saveTasks();
+        filterTasks();
+    });
 
-    taskSpan.textContent = trimmedText;
-
-    saveTasks();
-    filterTasks();
-
-});
-
-    // =======================
     // Delete Button
-    // =======================
-
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "Delete";
     deleteBtn.classList.add("delete-btn");
 
     deleteBtn.addEventListener("click", function () {
 
-       createRecycleTask(
-    taskSpan.textContent,
-    task,
-    task.classList.contains("completed"),
-    task.classList.contains("important")
-);
+        const isCompleted = task.classList.contains("completed");
+        const isImportant = task.classList.contains("important");
+
+        createRecycleTask(
+            taskSpan.textContent,
+            isCompleted,
+            isImportant
+        );
 
         task.remove();
 
-        totalTasks--;
+totalTasks--;
 
-        taskCount.textContent = totalTasks;
- 
-        saveTasks();
+updateTaskCount();
 
+saveTasks();
+updateStats();
     });
 
-    // =======================
-    // Add Elements to Task
-    // =======================
-
-task.appendChild(checkBox);
-task.appendChild(starBtn);
-task.appendChild(taskSpan);
-task.appendChild(editBtn);
-task.appendChild(deleteBtn);
-
-    // =======================
-    // Add Task to List
-    // =======================
+    // Add Elements
+    task.appendChild(checkBox);
+    task.appendChild(starBtn);
+    task.appendChild(taskSpan);
+    task.appendChild(editBtn);
+    task.appendChild(deleteBtn);
 
     taskList.appendChild(task);
 
-    // =======================
-    // Update Counter
-    // =======================
-
     totalTasks++;
-    taskCount.textContent = totalTasks;
 
-    // Clear Input
- 
-            if (shouldSave) {
-        saveTasks();
-    }
+    updateTaskCount();
 
+    if (shouldSave) saveTasks();
+        updateStats();
 }
+
+// =======================
+// Create Recycle Task
+// =======================
+
 function createRecycleTask(
     taskText,
-    task = null,
     completed = false,
     important = false
 ) {
-
     const recycleTask = document.createElement("div");
+    recycleTask.className = "recycle-task";
 
-recycleTask.className = "recycle-task";
+    recycleTask.dataset.completed = completed;
+    recycleTask.dataset.important = important;
 
-recycleTask.dataset.completed = completed;
-recycleTask.dataset.important = important;
+    // Text
+    const recycleText = document.createElement("span");
+    recycleText.textContent = taskText;
 
-const recycleText = document.createElement("span");
+    // Restore Button
+    const restoreBtn = document.createElement("button");
+    restoreBtn.textContent = "Restore";
+    restoreBtn.className = "restore-btn";
 
-recycleText.textContent = taskText;
+    // Delete Forever Button
+    const deleteForeverBtn = document.createElement("button");
+    deleteForeverBtn.textContent = "Delete Forever";
+    deleteForeverBtn.className = "delete-forever-btn";
 
-recycleTask.appendChild(recycleText);
+    recycleTask.appendChild(recycleText);
+    recycleTask.appendChild(restoreBtn);
+    recycleTask.appendChild(deleteForeverBtn);
 
-const restoreBtn = document.createElement("button");
+    // Restore
+    restoreBtn.addEventListener("click", function () {
 
-restoreBtn.textContent = "Restore";
+        const completedStatus =
+            recycleTask.dataset.completed === "true";
 
-restoreBtn.className = "restore-btn";
+        const importantStatus =
+            recycleTask.dataset.important === "true";
 
-const deleteForeverBtn = document.createElement("button");
+        recycleTask.remove();
 
-deleteForeverBtn.textContent = "Delete Forever";
+        createTask(
+            taskText,
+            completedStatus,
+            importantStatus
+        );
 
-deleteForeverBtn.className = "delete-forever-btn";
+        saveTasks();
+    });
 
-recycleTask.appendChild(restoreBtn);
+    // Delete Forever
+    deleteForeverBtn.addEventListener("click", function () {
 
-recycleTask.appendChild(deleteForeverBtn);
+        const confirmDelete = confirm(
+            "Delete this task forever?"
+        );
 
+        if (!confirmDelete) {
+            return;
+        }
 
-restoreBtn.addEventListener("click", function () {
+        recycleTask.remove();
 
-    recycleTask.remove();
+        saveTasks();
+    });
 
-    createTask(
-        taskText,
-        completed,
-        important
-    );
-       saveTasks();
-});
-
-deleteForeverBtn.addEventListener("click", function () {
-
-    recycleTask.remove();
-
-    saveTasks();
-
-});
-
-recycleBin.appendChild(recycleTask);
-
+    recycleBin.appendChild(recycleTask);
 }
 
 // =======================
@@ -257,35 +236,66 @@ addBtn.addEventListener("click", function () {
 
     taskInput.value = "";
 
+    taskInput.focus();
 });
 
+// =======================
+// Enter Key
+// =======================
 
 taskInput.addEventListener("keypress", function (event) {
 
     if (event.key === "Enter") {
-
         addBtn.click();
-
     }
-
 });
+
 // =======================
-// Clear All Tasks
+// Update Task Counter
+// =======================
+
+function updateTaskCount() {
+
+    totalTasks = document.querySelectorAll(".task").length;
+
+    taskCount.textContent = totalTasks;
+}
+
+// =======================
+// Clear All
 // =======================
 
 clearBtn.addEventListener("click", function () {
 
-    taskList.innerHTML = "";
+    const taskExists =
+        document.querySelectorAll(".task").length > 0;
 
+    const recycleExists =
+        document.querySelectorAll(".recycle-task").length > 0;
+
+    if (!taskExists && !recycleExists) {
+        return;
+    }
+
+    const confirmClear = confirm(
+        "Are you sure you want to clear all tasks and recycle bin?"
+    );
+
+    if (!confirmClear) {
+        return;
+    }
+
+    taskList.innerHTML = "";
     recycleBin.innerHTML = "";
 
-    totalTasks = 0;
+   totalTasks = 0;
 
-    taskCount.textContent = totalTasks;
+updateTaskCount();
 
-    saveTasks();
-
+saveTasks();
+updateStats();
 });
+
 // =======================
 // Save Tasks
 // =======================
@@ -293,60 +303,56 @@ clearBtn.addEventListener("click", function () {
 function saveTasks() {
 
     const tasks = [];
-
     const recycleTasks = [];
 
-    const allTasks = document.querySelectorAll(".task");
-
-    const allRecycleTasks = document.querySelectorAll(".recycle-task");
-
-    allTasks.forEach(function (task) {
+    document.querySelectorAll(".task").forEach(function (task) {
 
         tasks.push({
-
             text: task.querySelector("span").textContent,
-
             completed: task.classList.contains("completed"),
-
             important: task.classList.contains("important")
-
         });
-
     });
 
-    allRecycleTasks.forEach(function (task) {
+    document.querySelectorAll(".recycle-task").forEach(function (task) {
 
-    recycleTasks.push({
-
-        text: task.querySelector("span").textContent,
-
-        completed: task.dataset.completed === "true",
-
-        important: task.dataset.important === "true"
-
+        recycleTasks.push({
+            text: task.querySelector("span").textContent,
+            completed: task.dataset.completed === "true",
+            important: task.dataset.important === "true"
+        });
     });
 
-});
+    localStorage.setItem(
+        "tasks",
+        JSON.stringify(tasks)
+    );
 
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-
-    localStorage.setItem("recycleTasks", JSON.stringify(recycleTasks));
-
+    localStorage.setItem(
+        "recycleTasks",
+        JSON.stringify(recycleTasks)
+    );
 }
+
 // =======================
 // Load Tasks
 // =======================
 
 function loadTasks() {
 
-    const savedTasks = localStorage.getItem("tasks");
-    const savedRecycleTasks = localStorage.getItem("recycleTasks");
+    const savedTasks =
+        localStorage.getItem("tasks");
 
-    const tasks = savedTasks ? JSON.parse(savedTasks) : [];
+    const savedRecycleTasks =
+        localStorage.getItem("recycleTasks");
 
-    const recycleTasks = savedRecycleTasks
-        ? JSON.parse(savedRecycleTasks)
-        : [];
+    const tasks =
+        savedTasks ? JSON.parse(savedTasks) : [];
+
+    const recycleTasks =
+        savedRecycleTasks
+            ? JSON.parse(savedRecycleTasks)
+            : [];
 
     tasks.forEach(function (task) {
 
@@ -356,45 +362,41 @@ function loadTasks() {
             task.important,
             false
         );
-
     });
 
     recycleTasks.forEach(function (task) {
 
         createRecycleTask(
             task.text,
-            null,
             task.completed,
             task.important
         );
-
     });
 
-    saveTasks();
-
+    updateTaskCount();
 }
- loadTasks();
- allBtn.classList.add("active");
 
 // =======================
-// Search and Filter Tasks
+// Filter Tasks
 // =======================
-
-let currentFilter = "all";
 
 function filterTasks() {
 
-    const searchText = searchInput.value.toLowerCase();
+    const searchText =
+        searchInput.value.toLowerCase().trim();
 
-    const allTasks = document.querySelectorAll(".task");
+    document.querySelectorAll(".task").forEach(function (task) {
 
-    allTasks.forEach(function (task) {
+        const taskText =
+            task.querySelector("span")
+                .textContent
+                .toLowerCase();
 
-        const taskText = task.querySelector("span").textContent.toLowerCase();
+        const isCompleted =
+            task.classList.contains("completed");
 
-        const isCompleted = task.classList.contains("completed");
-
-        const matchesSearch = taskText.includes(searchText);
+        const matchesSearch =
+            taskText.includes(searchText);
 
         let matchesFilter = true;
 
@@ -406,60 +408,97 @@ function filterTasks() {
             matchesFilter = isCompleted;
         }
 
-        if (matchesSearch && matchesFilter) {
-            task.style.display = "flex";
-        } else {
-            task.style.display = "none";
-        }
-
+        task.style.display =
+            matchesSearch && matchesFilter
+                ? "flex"
+                : "none";
     });
-
 }
 
-
+// =======================
 // Search
+// =======================
 
 searchInput.addEventListener("input", function () {
-
     filterTasks();
-
 });
 
+// =======================
+// Filter Button Helper
+// =======================
 
-// All Button
+function setActiveFilter(filter) {
+
+    currentFilter = filter;
+
+    allBtn.classList.remove("active");
+    pendingBtn.classList.remove("active");
+    completedBtn.classList.remove("active");
+
+    if (filter === "all") {
+        allBtn.classList.add("active");
+    }
+
+    if (filter === "pending") {
+        pendingBtn.classList.add("active");
+    }
+
+    if (filter === "completed") {
+        completedBtn.classList.add("active");
+    }
+
+    filterTasks();
+}
+
+// =======================
+// Filter Buttons
+// =======================
 
 allBtn.addEventListener("click", function () {
-    currentFilter = "all";
-
-    allBtn.classList.add("active");
-    pendingBtn.classList.remove("active");
-    completedBtn.classList.remove("active");
-
-    filterTasks();
+    setActiveFilter("all");
 });
-
-
-// Pending Button
 
 pendingBtn.addEventListener("click", function () {
-    currentFilter = "pending";
-
-    pendingBtn.classList.add("active");
-    allBtn.classList.remove("active");
-    completedBtn.classList.remove("active");
-
-    filterTasks();
+    setActiveFilter("pending");
 });
-
-
-// Completed Button
 
 completedBtn.addEventListener("click", function () {
-    currentFilter = "completed";
-
-    completedBtn.classList.add("active");
-    allBtn.classList.remove("active");
-    pendingBtn.classList.remove("active");
-
-    filterTasks();
+    setActiveFilter("completed");
 });
+
+// =======================
+// Start App
+// =======================
+
+loadTasks();
+
+setActiveFilter("all");
+
+updateStats();
+
+function updateStats() {
+    const tasks = document.querySelectorAll(".task");
+
+    const total = tasks.length;
+
+    let completed = 0;
+
+    tasks.forEach(function (task) {
+        if (task.classList.contains("completed")) {
+            completed++;
+        }
+    });
+
+    const pending = total - completed;
+
+    const progress = total === 0
+        ? 0
+        : Math.round((completed / total) * 100);
+
+    totalStat.textContent = total;
+    pendingStat.textContent = pending;
+    completedStat.textContent = completed;
+
+    progressText.textContent = progress + "%";
+    progressFill.style.width = progress + "%";
+}

@@ -1,24 +1,28 @@
-# 📝 To-Do App
+# 📝 My To-Do App
 
-A simple and modern To-Do application built with HTML, CSS and JavaScript.
+A professional and responsive To-Do application built using HTML, CSS and Vanilla JavaScript.
 
 ## 🚀 Features
 
-- Add new tasks
-- Mark tasks as completed
+- Add tasks
+- Edit tasks
+- Complete / uncomplete tasks
+- Mark important tasks ⭐
+- Search tasks
+- Filter tasks by All, Pending and Completed
 - Delete tasks
-- Recycle Bin
 - Restore deleted tasks
 - Permanently delete tasks
 - Clear all tasks
-- Search tasks
-- Local Storage support
+- Persistent data using LocalStorage
+- Responsive mobile design
 
 ## 🛠️ Technologies Used
 
-- HTML
-- CSS
+- HTML5
+- CSS3
 - JavaScript
+- LocalStorage
 - Git
 - GitHub
 
@@ -26,7 +30,6 @@ A simple and modern To-Do application built with HTML, CSS and JavaScript.
 
 ```text
 todo-app/
-│
 ├── index.html
 ├── style.css
 ├── script.js

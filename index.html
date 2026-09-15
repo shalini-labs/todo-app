@@ -28,6 +28,40 @@
 
         </div>
 
+        <!-- Dashboard Stats -->
+        <div class="stats-section">
+
+            <div class="stat-card">
+                <span class="stat-label">Total</span>
+                <strong id="totalStat">0</strong>
+            </div>
+
+            <div class="stat-card">
+                <span class="stat-label">Pending</span>
+                <strong id="pendingStat">0</strong>
+            </div>
+
+            <div class="stat-card">
+                <span class="stat-label">Completed</span>
+                <strong id="completedStat">0</strong>
+            </div>
+
+        </div>
+
+        <!-- Progress -->
+        <div class="progress-section">
+
+            <div class="progress-header">
+                <span>Progress</span>
+                <strong id="progressText">0%</strong>
+            </div>
+
+            <div class="progress-bar">
+                <div id="progressFill"></div>
+            </div>
+
+        </div>
+
         <h3>
             Total Tasks:
             <span id="taskCount">0</span>
@@ -36,18 +70,18 @@
         <h2>📋 My Tasks</h2>
 
         <input
-    type="text"
-    id="searchInput"
-    placeholder="🔍 Search tasks..."
+            type="text"
+            id="searchInput"
+            placeholder="🔍 Search tasks..."
+        >
 
-    <div class="filter-section">
+        <div class="filter-section">
 
-    <button id="allBtn">All</button>
-    <button id="pendingBtn">Pending</button>
-    <button id="completedBtn">Completed</button>
+            <button id="allBtn">All</button>
+            <button id="pendingBtn">Pending</button>
+            <button id="completedBtn">Completed</button>
 
-</div>
->
+        </div>
 
         <div id="taskList"></div>
 
